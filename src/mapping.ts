@@ -45,28 +45,38 @@ export function handleItemCanceled(event: ItemCanceledEvent): void {
 }
 
 export function handleItemListed(event: ItemListedEvent): void {
-  let itemListed = ItemListed.load(getIdFromEventParams(event.params.tokenId, event.params.nftAddress));
-  let activeItem = ActiveItem.load(getIdFromEventParams(event.params.tokenId, event.params.nftAddress));
+  let itemListed = ItemListed.load(
+    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
+  )
+  let activeItem = ActiveItem.load(
+    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
+  )
   if (!itemListed) {
-    itemListed = new ItemListed(getIdFromEventParams(event.params.tokenId, event.params.nftAddress));
+    itemListed = new ItemListed(
+      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
+    )
   }
   if (!activeItem) {
-    activeItem = new ActiveItem(getIdFromEventParams(event.params.tokenId, event.params.nftAddress));
+    activeItem = new ActiveItem(
+      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
+    )
   }
-  itemListed.seller = event.params.seller;
-  activeItem.seller = event.params.seller;
+  itemListed.seller = event.params.seller
+  activeItem.seller = event.params.seller
 
-  itemListed.nftAddress = event.params.nftAddress;
-  activeItem.nftAddress = event.params.nftAddress;
+  itemListed.nftAddress = event.params.nftAddress
+  activeItem.nftAddress = event.params.nftAddress
 
-  itemListed.tokenId = event.params.tokenId;
-  activeItem.tokenId = event.params.tokenId;
+  itemListed.tokenId = event.params.tokenId
+  activeItem.tokenId = event.params.tokenId
 
-  itemListed.price = event.params.price;
-  activeItem.price = event.params.price;
+  itemListed.price = event.params.price
+  activeItem.price = event.params.price
 
-  itemListed.save();
-  activeItem.save();
+  activeItem.buyer = Address.fromString("0x0000000000000000000000000000000000000000")
+
+  itemListed.save()
+  activeItem.save()
 }
 
 function getIdFromEventParams(tokenId: BigInt, nftAddress: Address): string {
